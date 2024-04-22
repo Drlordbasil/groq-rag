@@ -13,11 +13,11 @@ import chainlit as cl
 #load_dotenv()  #
 #groq_api_key = os.environ['GROQ_API_KEY']
 
-llm_local = ChatOllama(model="mistral-instruct")
+llm_local = ChatOllama(model="llama3")
 llm_groq = ChatGroq(
             #groq_api_key=groq_api_key,
             #model_name='llama2-70b-4096' 
-            model_name='mixtral-8x7b-32768'
+            model_name='llama3-70b-8192'
     )
 
 @cl.on_chat_start
@@ -55,7 +55,7 @@ async def on_chat_start():
     metadatas = [{"source": f"{i}-pl"} for i in range(len(texts))]
 
     # Create a Chroma vector store
-    embeddings = OllamaEmbeddings(model="nomic-embed-text")
+    embeddings = OllamaEmbeddings(model="mxbai-embed-large")
     #embeddings = OllamaEmbeddings(model="llama2:7b")
     docsearch = await cl.make_async(Chroma.from_texts)(
         texts, embeddings, metadatas=metadatas
